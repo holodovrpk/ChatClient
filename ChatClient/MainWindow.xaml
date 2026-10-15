@@ -134,20 +134,9 @@
 
         <!-- 2. История сообщений -->
         <Border Grid.Row="1" Background="Gray" CornerRadius="5" Padding="10" Margin="0,0,0,15">
-            <ListBox x:Name="ChatListBox" 
+            <ListBox x:Name="ChatListBox" Foreground="White"
                      Style="{StaticResource CleanListBoxStyle}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock FontFamily="Consolas" Margin="0,2" TextWrapping="Wrap">
-                            <Run Text="[" Foreground="#AAAAAA"/>
-                            <Run Text="{Binding Time}" Foreground="#AAAAAA"/>
-                            <Run Text="]" Foreground="#AAAAAA"/>
-                            <Run Text="{Binding Sender}" Foreground="{Binding NameColor}" FontWeight="Bold"/>
-                            <Run Text=":" Foreground="{Binding NameColor}"/>
-                            <Run Text="{Binding Text}" Foreground="{Binding TextColor}"/>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
+                
             </ListBox>
         </Border>
 
