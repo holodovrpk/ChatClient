@@ -60,6 +60,8 @@ namespace ChatClient
                 AutoFlush = true
             };
 
+
+
             // Пример добавления системного сообщения
             //AddSystemMessage($"Подключено к серверу {server}:{port}");
         }
@@ -70,9 +72,10 @@ namespace ChatClient
             //AddSystemMessage("Отключено от сервера.");
         }
 
-        private void Send_Click(object sender, RoutedEventArgs e)
+        async private void Send_Click(object sender, RoutedEventArgs e)
         {
-            
+            string msg = MessageTextBox.Text;
+            await writer.WriteLineAsync(msg);
         }
     }
 }
