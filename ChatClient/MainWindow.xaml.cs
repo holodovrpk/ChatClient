@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -60,11 +61,44 @@ namespace ChatClient
                 AutoFlush = true
             };
 
+            await writer.WriteLineAsync(name);
+
+            _ = Task.Run(() => ListenToServerAsync());
 
 
             // Пример добавления системного сообщения
             //AddSystemMessage($"Подключено к серверу {server}:{port}");
         }
+
+        // метод прослушки сервера на получение новых сообщений
+        async void ListenToServerAsync()
+        {
+            while (true)
+            {
+                try
+                {
+                    // Асинхронно ждём сообщение от сервера.
+                    string? response = await reader.ReadLineAsync();
+
+
+                    ChatListBox.Dispatcher.Invoke(() =>
+                        ChatListBox.Items.Add($"📨 {response}")
+
+                    );
+                    
+                }
+                catch (IOException)
+                {
+                    // Поток был прерван (например, сервер отключился)
+                    ChatListBox.Dispatcher.Invoke(() =>
+                        ChatListBox.Items.Add($"⚠️ Соединение с сервером потеряно.")
+                        );
+                    
+                    break;
+                }
+            }
+        }
+
 
         private void Disconnect_Click(object sender, RoutedEventArgs e)
         {
